@@ -40,7 +40,7 @@ export const LayoutRaw = (
 
     const closed = isClosed({
         start: [10, 0],
-        end: [21, 15],
+        end: [21, 45],
     });
 
     useEffect(() => {
