@@ -1,5 +1,6 @@
 import { ButtonCounter, ButtonOutline } from "~components";
 import { useTranslation } from "react-i18next";
+import { forwardRef } from "react";
 
 type AddToCartButtonProps = {
   loading: boolean;
@@ -8,17 +9,16 @@ type AddToCartButtonProps = {
   submitting: boolean;
 };
 
-export const AddToCartButton = ({
-  count,
-  handleAdd,
-  loading = false,
-  submitting = false,
-}: AddToCartButtonProps) => {
+export const AddToCartButton = forwardRef<
+  HTMLButtonElement,
+  AddToCartButtonProps
+>(({ count, handleAdd, loading = false, submitting = false }, ref) => {
   const { t } = useTranslation();
 
   if (count) {
     return (
       <ButtonCounter
+        ref={ref}
         handleIncrement={() => {
           handleAdd(1);
         }}
@@ -31,6 +31,7 @@ export const AddToCartButton = ({
   }
   return (
     <ButtonOutline
+      ref={ref}
       loading={loading}
       submitting={submitting}
       onClick={() => {
@@ -40,4 +41,4 @@ export const AddToCartButton = ({
       {t("order.order_btn")}
     </ButtonOutline>
   );
-};
+});

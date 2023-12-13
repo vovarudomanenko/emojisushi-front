@@ -12,7 +12,7 @@ import {
 } from "./components";
 import { findInCart } from "./utils";
 import { Price } from "~components/Price";
-import { AddToCartButton } from "~components/buttons";
+import { AddToCartButton, Button } from "~components/buttons";
 import { useMutation } from "@tanstack/react-query";
 import { cartApi } from "~api";
 import { queryClient } from "~query-client";
@@ -20,6 +20,7 @@ import { cartQuery } from "~queries";
 import { ICartProduct, IGetCartRes, IGetWishlistRes } from "~api/types";
 import { formatUAHPrice } from "~utils/price.utils";
 import { arrImmutableReplaceAt, arrImmutableDeleteAt } from "~utils/arr.utils";
+import { ProductOptionModal } from "~components/modals/ProductOptionModal";
 
 export type TProductCardProps = {
   product?: Product;
@@ -226,12 +227,16 @@ export const ProductCard = ({
 
       <S.Footer>
         <Price loading={loading} oldPrice={oldPrice} newPrice={newPrice} />
-        <AddToCartButton
-          submitting={false}
-          loading={loading}
-          count={cartProduct?.quantity || 0}
-          handleAdd={handleAdd}
-        />
+        <ProductOptionModal>
+          <div>
+            <AddToCartButton
+              submitting={false}
+              loading={loading}
+              count={cartProduct?.quantity || 0}
+              handleAdd={handleAdd}
+            />
+          </div>
+        </ProductOptionModal>
       </S.Footer>
     </S.Wrapper>
   );

@@ -13,10 +13,9 @@ const Label = styled.label`
   user-select: none;
   border: 1px solid #393939;
   border-radius: 10px;
-  padding: 11px 33px;
+  padding: 10px;
   font-size: 15px;
   line-height: 18px;
-
   &:hover {
     background: #393939;
   }
@@ -25,8 +24,9 @@ const Label = styled.label`
 const CheckBoxWrapper = styled.div`
   background: #1c1c1c;
   overflow: hidden;
-  margin-top: 10px;
   margin-right: 10px;
+  border-radius: 10px:
+  display: flex
 `;
 
 const CheckBox = styled.input`
