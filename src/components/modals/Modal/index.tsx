@@ -1,15 +1,15 @@
-import { BaseModal, IBaseModalProps } from "../BaseModal";
+import { BaseModal, IBaseModalProps } from "~components";
 import * as S from "./styled";
-import { CloseModalIcon } from "../CloseModalIcon";
+import { CloseModalIcon } from "~components";
 import { ReactNode } from "react";
 import { IAlignItems, IJustifyContent } from "~components/FlexBox";
 
 export type IModalProps = {
-  children: ReactNode;
   alignItems?: IAlignItems;
   justifyContent?: IJustifyContent;
   render: (props: { close: () => void }) => ReactNode;
   width?: string;
+  closable?: boolean;
   alignCenter?: boolean;
 } & Omit<IBaseModalProps, "overlayStyles" | "render">;
 
@@ -20,6 +20,7 @@ export const Modal = ({
   render,
   width,
   alignCenter,
+  closable,
   ...rest
 }: IModalProps) => {
   const overlayStyles = {
@@ -31,12 +32,16 @@ export const Modal = ({
   };
   return (
     <BaseModal
+      closable={closable}
       overlayStyles={overlayStyles}
       render={({ close }) => (
         <S.Container width={width} alignCenter={alignCenter}>
-          <S.CloseIcon>
-            <CloseModalIcon close={close} />
-          </S.CloseIcon>
+          {closable && (
+            <S.CloseIcon>
+              <CloseModalIcon close={close} />
+            </S.CloseIcon>
+          )}
+
           {render({ close })}
         </S.Container>
       )}

@@ -25,6 +25,7 @@ import {
 export type IBaseModalProps = {
   open?: boolean;
   children: ReactElement;
+  closable?: boolean;
   overlayStyles: CSSProperties;
   render: (props: {
     close: () => void;
@@ -42,14 +43,15 @@ export type IBaseModalProps = {
 export const BaseModalComponent = ({
   render,
   overlayStyles,
-  open: passedOpen = false,
+  closable = true,
+  open: openProp = false,
   children,
   useClickOptions = {},
 }: IBaseModalProps) => {
-  const [open, setOpen] = useState(passedOpen);
   const [allowDismiss, setAllowDismiss] = useState(true);
   const nodeId = useFloatingNodeId();
   const parentId = useFloatingParentNodeId();
+  const [open, setOpen] = useState(openProp);
 
   const { reference, floating, context, refs } = useFloating({
     open,
@@ -64,7 +66,7 @@ export const BaseModalComponent = ({
     useClick(context, useClickOptions),
     useRole(context),
     useDismiss(context, {
-      enabled: allowDismiss,
+      enabled: allowDismiss && closable,
     }),
   ]);
 
@@ -99,7 +101,11 @@ export const BaseModalComponent = ({
     });
   }, [nodeId, parentId, tree, open, refs.reference]);
 
-  const close = () => setOpen(false);
+  const close = () => {
+    if (closable) {
+      setOpen(false);
+    }
+  };
 
   return (
     <FloatingNode id={nodeId}>
